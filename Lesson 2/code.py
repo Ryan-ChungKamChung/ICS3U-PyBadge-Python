@@ -26,11 +26,10 @@ def game_scene():
     # renders bg, most likely only once per scene
     game.render_block()
 
-
+    # repeats forever, game loop
     while True:
         pass
 
 
 if __name__ == "__main__":
     game_scene()
-  
