@@ -28,7 +28,7 @@ def game_scene():
     pew_sound = open("pew.wav", 'rb')
     sound = ugame.audio
     sound.stop()
-    sound.mute(false)
+    sound.mute(False)
     
     # set background to img 0 and 10x8 tiles of size 16x16
     background = stage.Grid(image_bank_background, constants.SCREEN_GRID_X, 
@@ -55,14 +55,14 @@ def game_scene():
         keys = ugame.buttons.get_pressed()
         
         # A button to fire
-        if keys & ugame.K_O != 0
+        if keys & ugame.K_O != 0:
             if a_button == constants.button_state["button_up"]:
                 a_button = constants.button_state["button_just_pressed"]
             elif a_button == constants.button_state["button_just_pressed"]:
-                a_button == constants.button_state["button_still_pressed"]
+                a_button = constants.button_state["button_still_pressed"]
         else:
             if a_button == constants.button_state["button_still_pressed"]:
-                a_button == constants.button_state["button_released"]
+                a_button = constants.button_state["button_released"]
             else:
                 a_button = constants.button_state["button_up"]
 
@@ -86,13 +86,13 @@ def game_scene():
             pass
         if keys & ugame.K_DOWN != 0:
             pass
-
+        
         # update game logic
         # play sound if A was button_just_pressed
         if a_button == constants.button_state["button_just_pressed"]:
             sound.play(pew_sound)
-
-
+        
+        
         #redraw Sprite
         game.render_sprites([ship] + [alien])
         game.tick()
