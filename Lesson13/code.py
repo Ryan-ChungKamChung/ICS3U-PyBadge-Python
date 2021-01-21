@@ -2,125 +2,111 @@
 
 # Created by Ryan Chung Kam Chung
 # Created in January 2021
-# Final version of Ghost Dodge!
+# Setting background on the PyBadge
 
 
-# Libraries that will enable us to render and stage assets
 import ugame
 import stage
+import time
 import random
 import supervisor
-import time
 
-# Constants file
 import constants
 
 
 def splash_scene():
-    # Splash scene
+    # this function is the splash scene
 
-    # SOUND
-    # Sound library
+    # get sound ready
     coin_sound = open("coin.wav", 'rb')
-
-    # Sound setup
     sound = ugame.audio
-    # Stop all sound
     sound.stop()
-    # Unmute
     sound.mute(False)
-
-    # Play coin sound
     sound.play(coin_sound)
 
-    # IMAGE BANK
-    splash_image_bank = stage.Bank.from_bmp16("splash_over_image_bank.bmp")
+    # image bank
+    image_bank_mt_background = stage.Bank.from_bmp16("mt_game_studio.bmp")
 
-    # BACKGROUND
-    splash_background = stage.Grid(splash_image_bank, constants.SCREEN_X,
-                                   constants.SCREEN_Y)
+    # sets bg to image 0 in the image bank
+    background = stage.Grid(image_bank_mt_background,
+                            constants.SCREEN_X, constants.SCREEN_Y)
 
     # used this program to split the image into tile:
     #   https://ezgif.com/sprite-cutter/ezgif-5-818cdbcc3f66.png
-    splash_background.tile(2, 2, 0)  # blank white
-    splash_background.tile(3, 2, 1)
-    splash_background.tile(4, 2, 2)
-    splash_background.tile(5, 2, 3)
-    splash_background.tile(6, 2, 4)
-    splash_background.tile(7, 2, 0)  # blank white
+    background.tile(2, 2, 0)  # blank white
+    background.tile(3, 2, 1)
+    background.tile(4, 2, 2)
+    background.tile(5, 2, 3)
+    background.tile(6, 2, 4)
+    background.tile(7, 2, 0)  # blank white
 
-    splash_background.tile(2, 3, 0)  # blank white
-    splash_background.tile(3, 3, 5)
-    splash_background.tile(4, 3, 6)
-    splash_background.tile(5, 3, 7)
-    splash_background.tile(6, 3, 8)
-    splash_background.tile(7, 3, 0)  # blank white
+    background.tile(2, 3, 0)  # blank white
+    background.tile(3, 3, 5)
+    background.tile(4, 3, 6)
+    background.tile(5, 3, 7)
+    background.tile(6, 3, 8)
+    background.tile(7, 3, 0)  # blank white
 
-    splash_background.tile(2, 4, 0)  # blank white
-    splash_background.tile(3, 4, 9)
-    splash_background.tile(4, 4, 10)
-    splash_background.tile(5, 4, 11)
-    splash_background.tile(6, 4, 12)
-    splash_background.tile(7, 4, 0)  # blank white
+    background.tile(2, 4, 0)  # blank white
+    background.tile(3, 4, 9)
+    background.tile(4, 4, 10)
+    background.tile(5, 4, 11)
+    background.tile(6, 4, 12)
+    background.tile(7, 4, 0)  # blank white
 
-    splash_background.tile(2, 5, 0)  # blank white
-    splash_background.tile(3, 5, 0)
-    splash_background.tile(4, 5, 13)
-    splash_background.tile(5, 5, 14)
-    splash_background.tile(6, 5, 0)
-    splash_background.tile(7, 5, 0)  # blank white
+    background.tile(2, 5, 0)  # blank white
+    background.tile(3, 5, 0)
+    background.tile(4, 5, 13)
+    background.tile(5, 5, 14)
+    background.tile(6, 5, 0)
+    background.tile(7, 5, 0)  # blank white
 
-    # RENDER AND STAGING
-    # Creates stage and sets it to 60fps
+    # creates stage and sets it to 60fps
     game = stage.Stage(ugame.display, constants.FPS)
-    # Sets the layers of all sprites, in order
-    game.layers = [splash_background]
-    # Renders all sprites, only once
+
+    # sets the layers of all sprites, in order
+    game.layers = [background]
+
+    # renders all sprites, only once
     game.render_block()
 
-    # Calls menu scene after the sound is done playing
     while True:
         time.sleep(2.0)
         menu_scene()
 
 
 def menu_scene():
-    # Menu scene
+    # this function is the menu scene
 
-    # IMAGE BANK
-    menu_image_bank = stage.Bank.from_bmp16("image_bank_1.bmp")
+    # image bank
+    image_bank_mt_background = stage.Bank.from_bmp16("mt_game_studio.bmp")
 
-    # BACKGROUND
-    # Sets background to the 0th image in the image bank, 10x8 grid
-    menu_background = stage.Grid(menu_image_bank, constants.SCREEN_GRID_X,
-                                 constants.SCREEN_GRID_Y)
-
-    # Sets the floor as the 1st image in the image bank, the walls are
-    # still going to be the 0th image
-    for x_location in range(1, constants.SCREEN_GRID_X - 1):
-        for y_location in range(1, constants.SCREEN_GRID_Y - 1):
-            tile_picked = 1
-            menu_background.tile(x_location, y_location, tile_picked)
-
-    # TEXT
+    # add text objects
     text = []
     text1 = stage.Text(width=29, height=12, font=None,
-                       palette=constants.PALETTE, buffer=None)
-    text1.move(32, 10)
-    text1.text("Ghost Dodge!")
+                       palette=constants.NEW_PALETTE, buffer=None)
+
+    text1.move(20, 10)
+    text1.text("MT Game Studios")
     text.append(text1)
 
     text2 = stage.Text(width=29, height=12, font=None,
-                       palette=constants.PALETTE, buffer=None)
-    text2.move(35, 110)
+                       palette=constants.NEW_PALETTE, buffer=None)
+
+    text2.move(40, 110)
     text2.text("PRESS START")
     text.append(text2)
 
-    # STAGE AND RENDER
+    # sets bg to image 0 in the image bank
+    background = stage.Grid(image_bank_mt_background,
+                            constants.SCREEN_X, constants.SCREEN_Y)
+
     # creates stage and sets it to 60fps
     game = stage.Stage(ugame.display, constants.FPS)
+
     # sets the layers of all sprites, in order
-    game.layers = text + [menu_background]
+    game.layers = text + [background]
+
     # renders all sprites, only once
     game.render_block()
 
@@ -137,122 +123,96 @@ def menu_scene():
 
 
 def game_scene():
-    # Main game scene
+    # this function is the main game scene
 
-    # SCORE
     score = 0
 
     score_text = stage.Text(width=29, height=14)
     score_text.clear()
-    score_text.cursor(0, 0)
-    score_text.move(0, 1)
+    score_text.cursor(0,0)
+    score_text.move(1,1)
     score_text.text("Score: {0}".format(score))
 
-    # FUNCTION DEFINITION
-    def show_ghost():
-        numbers_x = list(range(character.x - 3 * constants.SPRITE_SIZE,
-                               character.x,
-                               character.x + 3 * constants.SPRITE_SIZE))
-        numbers_y = list(range(character.y - 3 * constants.SPRITE_SIZE,
-                               character.y,
-                               character.y + 3 * constants.SPRITE_SIZE))
-        random_x = random.choice([element for element in
-                                 range(-1 * constants.SPRITE_SIZE,
-                                       constants.SCREEN_X
-                                       + constants.SPRITE_SIZE)
-                                 if element != numbers_x])
-        random_y = random.choice([element for element in
-                                 range(-1 * constants.SPRITE_SIZE,
-                                       constants.SCREEN_Y
-                                       + constants.SPRITE_SIZE)
-                                 if element != numbers_y])
+    def show_alien():
 
-        for ghost_number in range(len(ghosts)):
-            ghosts[ghost_number].move(random_x, random_y)
-            break
+        for alien_number in range(len(aliens)):
+            if aliens[alien_number].x < 0:
+                aliens[alien_number].move(random.randint(0 +
+                                                         constants.SPRITE_SIZE,
+                                                         constants.SCREEN_X -
+                                                         constants.SPRITE_SIZE),
+                                          constants.OFF_TOP_SCREEN)
+                break
 
-    # IMAGE BANKS
-    game_image_bank = stage.Bank.from_bmp16("image_bank_1.bmp")
+    # image bank
+    image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
+    image_bank_sprites = stage.Bank.from_bmp16("space_aliens.bmp")
 
-    # BACKGROUND
-    # Sets background to the 0th image in the image bank, 10x8 grid
-    game_background = stage.Grid(game_image_bank, constants.SCREEN_GRID_X,
-                                 constants.SCREEN_GRID_Y)
+    # buttons that you want to keep state information on
+    a_button = constants.button_state["button_up"]
+    b_button = constants.button_state["button_up"]
+    start_button = constants.button_state["button_up"]
+    select_button = constants.button_state["button_up"]
 
-    # Sets the floor as the 1st image in the image bank, the walls are
-    # still going to be the 0th image
-    for x_location in range(1, constants.SCREEN_GRID_X - 1):
-        for y_location in range(1, constants.SCREEN_GRID_Y - 1):
-            tile_picked = 1
-            game_background.tile(x_location, y_location, tile_picked)
-
-    # SOUND
-    # Sound library
-    # Shooting sound
+    # get sound ready
     pew_sound = open("pew.wav", 'rb')
-    # Bullets hitting ghosts
-    crash_sound = open("crash.wav", 'rb')
-    # Ghosts hitting character
-    boom_sound = open("boom.wav", 'rb')
-
-    # Sound setup
     sound = ugame.audio
-    # Stop all sound
     sound.stop()
-    # Unmute
     sound.mute(False)
 
-    # BUTTON STATES
-    # Buttons with state information
-    a_button = constants.button_state["button_up"]
+    boom_sound = open("boom.wav", 'rb')
+    sound = ugame.audio
+    sound.stop()
+    sound.mute(False)
 
-    # SPRITES CREATION
-    # Character sprite being displayed
-    character = stage.Sprite(game_image_bank, 5, 75, 66)
+    crash_sound = open("crash.wav", 'rb')
+    sound = ugame.audio
+    sound.stop()
+    sound.mute(False)
 
-    # Creates bullets
-    bullets = []
-    bullet_direction = []
-    for bullet_number in range(constants.TOTAL_NUMBER_OF_BULLETS):
-        a_single_bullet = stage.Sprite(game_image_bank, 10,
-                                       constants.OFF_SCREEN_X,
-                                       constants.OFF_SCREEN_Y)
-        bullets.append(a_single_bullet)
-        # Sets bullet direction
-        bullet_direction.append("")
-        direction = "Up"
+    # set background to img 0 and 10x8 tiles of size 16x16
+    background = stage.Grid(image_bank_background, constants.SCREEN_GRID_X,
+                            constants.SCREEN_GRID_Y)
+    for x_location in range(constants.SCREEN_GRID_X):
+        for y_location in range(constants.SCREEN_GRID_Y):
+            tile_picked = random.randint(1, 3)
+            background.tile(x_location, y_location, tile_picked)
 
-    # Creates ghosts
-    ghosts = []
-    for ghost_number in range(constants.TOTAL_NUMBER_OF_GHOSTS):
-        a_single_ghost = stage.Sprite(game_image_bank, 9,
+    # sprite that will be updated every frame
+    ship = stage.Sprite(image_bank_sprites, 5, 75, constants.SCREEN_Y - (2 *
+                        constants.SPRITE_SIZE))
+
+    aliens = []
+    for alien_number in range(constants.TOTAL_NUMBER_OF_ALIENS):
+        a_single_alien = stage.Sprite(image_bank_sprites, 9,
                                       constants.OFF_SCREEN_X,
                                       constants.OFF_SCREEN_Y)
-        ghosts.append(a_single_ghost)
+        aliens.append(a_single_alien)
+    show_alien()
 
-    show_ghost()
+    lasers = []
+    for laser_number in range(constants.TOTAL_NUMBER_OF_LASERS):
+        a_single_laser = stage.Sprite(image_bank_sprites, 10,
+                                     constants.OFF_SCREEN_X,
+                                     constants.OFF_SCREEN_Y)
+        lasers.append(a_single_laser)
 
-    # DIFFICULTY
-    difficulty = 1
-
-    # STAGE AND RENDER
-    # Creates a stage for the background
-    # Sets frame rate to 60fps
+    # creates stage and sets it to 60fps
     game = stage.Stage(ugame.display, constants.FPS)
-    # Sets sprite layers and show up in order
-    game.layers = ([score_text] + bullets + [character] + ghosts
-                   + [game_background])
-    # Renders all sprites, only once
+
+    # sets the layers of all sprites, in order
+    game.layers = [score_text] + lasers + [ship] + aliens + [background]
+
+    # renders all sprites, only once
     game.render_block()
 
-    # GAME LOOP
+    # forever game loop
     while True:
-
-        # USER MOVEMENT + SHOOTING
+        # get user input
         keys = ugame.buttons.get_pressed()
 
-        # Button states to fire
-        if keys & ugame.K_X != 0:
+        # A button to fire
+        if keys & ugame.K_O != 0:
             if a_button == constants.button_state["button_up"]:
                 a_button = constants.button_state["button_just_pressed"]
             elif a_button == constants.button_state["button_just_pressed"]:
@@ -262,224 +222,142 @@ def game_scene():
                 a_button = constants.button_state["button_released"]
             else:
                 a_button = constants.button_state["button_up"]
-        if keys & ugame.K_RIGHT:
-            # Move right with constraints of the right border
-            if character.x <= constants.SCREEN_X - 2 * constants.SPRITE_SIZE:
-                character.move(character.x + constants.SPRITE_MOVEMENT_SPEED,
-                               character.y)
-            else:
-                character.move(constants.SCREEN_X - 2 * constants.SPRITE_SIZE,
-                               character.y)
-            direction = "Right"
-        if keys & ugame.K_LEFT:
-            # Move left with constraints of the left border
-            if character.x >= constants.SCREEN_X - 9 * constants.SPRITE_SIZE:
-                character.move(character.x - constants.SPRITE_MOVEMENT_SPEED,
-                               character.y)
-            else:
-                character.move(constants.SPRITE_SIZE, character.y)
-            direction = "Left"
-        if keys & ugame.K_UP:
-            # Moves down with constraints of the ceiling
-            if character.y >= constants.SPRITE_SIZE:
-                character.move(character.x,
-                               character.y - constants.SPRITE_MOVEMENT_SPEED)
-            else:
-                character.move(character.x, constants.SPRITE_SIZE)
-            direction = "Up"
-        if keys & ugame.K_DOWN:
-            # Moves down with constraints of the ground
-            if character.y <= constants.SCREEN_Y - 2 * constants.SPRITE_SIZE:
-                character.move(character.x,
-                               character.y + constants.SPRITE_MOVEMENT_SPEED)
-            else:
-                character.move(character.x,
-                               constants.SCREEN_Y - 2 * constants.SPRITE_SIZE)
-            direction = "Down"
 
-        # Shoot with sound
+        if keys & ugame.K_X != 0:
+            pass
+        if keys & ugame.K_START != 0:
+            pass
+        if keys & ugame.K_SELECT != 0:
+            pass
+        if keys & ugame.K_RIGHT != 0:
+            if ship.x <= constants.SCREEN_X - constants.SPRITE_SIZE:
+                ship.move(ship.x + constants.SPRITE_MOVEMENT_SPEED, ship.y)
+            else:
+                ship.move(constants.SCREEN_X - constants.SPRITE_SIZE, ship.y)
+        if keys & ugame.K_LEFT != 0:
+            if ship.x >= 0:
+                ship.move(ship.x - constants.SPRITE_MOVEMENT_SPEED, ship.y)
+            else:
+                ship.move(0, ship.y)
+        if keys & ugame.K_UP != 0:
+            pass
+        if keys & ugame.K_DOWN != 0:
+            pass
+
+        # update game logic
         if a_button == constants.button_state["button_just_pressed"]:
-            for bullet_number in range(len(bullets)):
-                if bullets[bullet_number].x < 0:
-                    bullets[bullet_number].move(character.x, character.y)
-                    bullet_direction[bullet_number] = direction
+            for laser_number in range(len(lasers)):
+                if lasers[laser_number].x < 0:
+                    lasers[laser_number].move(ship.x, ship.y)
                     sound.play(pew_sound)
                     break
 
-        # SET DIFFICULTY
-        ghost_speed = difficulty / 10
-        if score % 10 == 0:
-            difficulty += 0.025
-
-        # BULLET MOVEMENT
-        # When bullets get shot, check if they are off the screen.
-        for bullet_number in range(len(bullets)):
-            if bullets[bullet_number].x > -1 * constants.SPRITE_SIZE:
-                if bullet_direction[bullet_number] == "Up":
-                    bullets[bullet_number].move(bullets[bullet_number].x,
-                                                bullets[bullet_number].y
-                                                - constants.BULLET_SPEED)
-                if bullet_direction[bullet_number] == "Down":
-                    bullets[bullet_number].move(bullets[bullet_number].x,
-                                                bullets[bullet_number].y
-                                                + constants.BULLET_SPEED)
-                if bullet_direction[bullet_number] == "Left":
-                    bullets[bullet_number].move(bullets[bullet_number].x
-                                                - constants.BULLET_SPEED,
-                                                bullets[bullet_number].y)
-                if bullet_direction[bullet_number] == "Right":
-                    bullets[bullet_number].move(bullets[bullet_number].x
-                                                + constants.BULLET_SPEED,
-                                                bullets[bullet_number].y)
-
-            # Move back bullets to "staging"
-            # if they are too far from the character
-            # Right
-            if bullets[bullet_number].x > (character.x
-                                           + 2 * constants.SPRITE_SIZE):
-                bullets[bullet_number].move(constants.OFF_SCREEN_X,
+        for laser_number in range(len(lasers)):
+            if lasers[laser_number].x > 0:
+                lasers[laser_number].move(lasers[laser_number].x,
+                                          lasers[laser_number].y -
+                                          constants.LASER_SPEED)
+                if lasers[laser_number].y < constants.OFF_TOP_SCREEN:
+                    lasers[laser_number].move(constants.OFF_SCREEN_X,
+                                              constants.OFF_SCREEN_Y)
+        for alien_number in range(len(aliens)):
+            if aliens[alien_number].x > 0:
+                aliens[alien_number].move(aliens[alien_number].x,
+                                          aliens[alien_number].y +
+                                            constants.ALIEN_SPEED)
+                if aliens[alien_number].y > constants.SCREEN_Y:
+                    aliens[alien_number].move(constants.OFF_SCREEN_X,
                                             constants.OFF_SCREEN_Y)
-            # Right
-            if bullets[bullet_number].x < (character.x
-                                           - 2 * constants.SPRITE_SIZE):
-                bullets[bullet_number].move(constants.OFF_SCREEN_X,
-                                            constants.OFF_SCREEN_Y)
-            # Down
-            if bullets[bullet_number].y > (character.y
-                                           + 2 * constants.SPRITE_SIZE):
-                bullets[bullet_number].move(constants.OFF_SCREEN_X,
-                                            constants.OFF_SCREEN_Y)
-            # Up
-            if bullets[bullet_number].y < (character.y
-                                           - 2 * constants.SPRITE_SIZE):
-                bullets[bullet_number].move(constants.OFF_SCREEN_X,
-                                            constants.OFF_SCREEN_Y)
+                    show_alien()
+                    score -= 1
+                    if score < 0:
+                        score = 0
+                    score_text.clear()
+                    score_text.cursor(0,0)
+                    score_text.move(1,1)
+                    score_text.text("Score: {0}".format(score))
 
-        # GHOST MOVEMENT
-        # Ghost's movement towards character
-        for ghost_number in range(len(ghosts)):
-            if ghosts[ghost_number].x > -1 * constants.SPRITE_SIZE:
-                # Right of character (horizontal)
-                if ghosts[ghost_number].x > character.x:
-                    ghosts[ghost_number].move(ghosts[ghost_number].x
-                                              - ghost_speed,
-                                              ghosts[ghost_number].y)
-                # Left of character (horizontal)
-                if ghosts[ghost_number].x < character.x:
-                    ghosts[ghost_number].move(ghosts[ghost_number].x
-                                              + ghost_speed,
-                                              ghosts[ghost_number].y)
-                # Under character (vertical)
-                if ghosts[ghost_number].y > character.y:
-                    ghosts[ghost_number].move(ghosts[ghost_number].x,
-                                              ghosts[ghost_number].y
-                                              - ghost_speed)
-                # Over character (vertical)
-                if ghosts[ghost_number].y < character.y:
-                    ghosts[ghost_number].move(ghosts[ghost_number].x,
-                                              ghosts[ghost_number].y
-                                              + ghost_speed)
-                # Stay if the same
-                if ghosts[ghost_number].x == character.x:
-                    ghosts[ghost_number].move(ghosts[ghost_number].x,
-                                              ghosts[ghost_number].y)
-                # Stay if the same
-                if ghosts[ghost_number].y == character.y:
-                    ghosts[ghost_number].move(ghosts[ghost_number].x,
-                                              ghosts[ghost_number].y)
-
-        # HIT COLLISION
-        # Bullets hitting ghosts
-        for bullet_number in range(len(bullets)):
-            if bullets[bullet_number].x > 0:
-                for ghost_number in range(len(ghosts)):
-                    if ghosts[ghost_number].x > 0:
-                        if stage.collide(bullets[bullet_number].x + 6,
-                                         bullets[bullet_number].y + 2,
-                                         bullets[bullet_number].x + 11,
-                                         bullets[bullet_number].y + 12,
-                                         ghosts[ghost_number].x + 1,
-                                         ghosts[ghost_number].y,
-                                         ghosts[ghost_number].x + 15,
-                                         ghosts[ghost_number].y + 15):
-                            ghosts[ghost_number].move(constants.OFF_SCREEN_X,
+        for laser_number in range(len(lasers)):
+            if lasers[laser_number].x > 0:
+                for alien_number in range(len(aliens)):
+                    if aliens[alien_number].x > 0:
+                        if stage.collide(lasers[laser_number].x + 6,
+                                         lasers[laser_number].y + 2,
+                                         lasers[laser_number].x + 11,
+                                         lasers[laser_number].y + 12,
+                                         aliens[alien_number].x + 1,
+                                         aliens[alien_number].y,
+                                         aliens[alien_number].x + 15,
+                                         aliens[alien_number].y + 15):
+                            aliens[alien_number].move(constants.OFF_SCREEN_X,
                                                       constants.OFF_SCREEN_Y)
-                            bullets[bullet_number].move(constants.OFF_SCREEN_X,
-                                                        constants.OFF_SCREEN_Y)
+                            lasers[laser_number].move(constants.OFF_SCREEN_X,
+                                                      constants.OFF_SCREEN_Y)
                             sound.stop()
                             sound.play(boom_sound)
-                            show_ghost()
-                            score += 1
+                            show_alien()
+                            show_alien()
+                            score = score + 1
                             score_text.clear()
-                            score_text.cursor(0, 0)
-                            score_text.move(1, 1)
+                            score_text.cursor(0,0)
+                            score_text.move(1,1)
                             score_text.text("Score: {0}".format(score))
 
-        # Ghosts hitting the character
-        for ghost_number in range(len(ghosts)):
-            if ghosts[ghost_number].x > 0:
-                if stage.collide(ghosts[ghost_number].x + 1,
-                                 ghosts[ghost_number].y,
-                                 ghosts[ghost_number].x + 15,
-                                 ghosts[ghost_number].y + 15,
-                                 character.x,
-                                 character.y,
-                                 character.x + 15,
-                                 character.y + 15):
+        for alien_number in range(len(aliens)):
+            if aliens[alien_number].x > 0:
+                if stage.collide(aliens[alien_number].x + 1,
+                                 aliens[alien_number].y,
+                                 aliens[alien_number].x + 15,
+                                 aliens[alien_number].y + 15,
+                                 ship.x, ship.y,
+                                 ship.x + 15, ship.y + 15):
+                    # alien hit the ship
                     sound.stop()
                     sound.play(crash_sound)
-                    time.sleep(1.0)
+                    time.sleep(3.0)
                     game_over_scene(score)
 
-        # RENDER AND REDRAW
-        # Renders and redraws the sprites that move
-        game.render_sprites(ghosts + bullets + [character])
-        # Waits until refresh rate finishes
+
+        # redraw Sprite
+        game.render_sprites(aliens + lasers + [ship])
         game.tick()
 
-
 def game_over_scene(final_score):
-    # Game over scene
+    # this function is the game over scene
 
-    # SOUND
+    # turn off sound from last scene
     sound = ugame.audio
     sound.stop()
 
-    # IMAGE_BANK
-    over_image_bank = stage.Bank.from_bmp16("splash_over_image_bank.bmp")
+    # image banks for CPython
+    image_bank_2 = stage.Bank.from_bmp16("mt_game_studio.bmp")
 
-    # BACKGROUND
     # sets the background to image 0 in the image Bank
-    over_background = stage.Grid(over_image_bank, constants.SCREEN_GRID_X,
-                                 constants.SCREEN_GRID_Y)
+    background = stage.Grid(image_bank_2, constants.SCREEN_GRID_X,
+                            constants.SCREEN_GRID_Y)
 
-    # TEXT
+    # Text boxes
     text = []
     text1 = stage.Text(width=29, height=12, font=None,
-                       palette=constants.PALETTE, buffer=None)
+                       palette=constants.NEW_PALETTE, buffer=None)
     text1.move(22, 20)
     text1.text("Final Score: {:0>2d}".format(final_score))
     text.append(text1)
 
     text2 = stage.Text(width=29, height=14, font=None,
-                       palette=constants.PALETTE, buffer=None)
+                       palette=constants.NEW_PALETTE, buffer=None)
     text2.move(43, 60)
     text2.text("GAME OVER")
     text.append(text2)
 
     text3 = stage.Text(width=29, height=14, font=None,
-                       palette=constants.PALETTE, buffer=None)
+                       palette=constants.NEW_PALETTE, buffer=None)
     text3.move(32, 110)
     text3.text("PRESS SELECT")
     text.append(text3)
 
-    # STAGE AND RENDER
-    # Creates a stage for the background
-    # Sets frame rate to 60fps
     game = stage.Stage(ugame.display, constants.FPS)
-    # Sets sprite layers and show up in order
-    game.layers = text + [over_background]
-    # Renders all sprites, only once
+    game.layers = text + [background]
     game.render_block()
 
     while True:
@@ -494,6 +372,5 @@ def game_over_scene(final_score):
         game.tick()
 
 
-# Makes this file run as the main file of the program, and runs menu_scene()
 if __name__ == "__main__":
     splash_scene()
